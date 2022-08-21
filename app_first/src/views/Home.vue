@@ -19,6 +19,10 @@ export default {
 		}
 	},
 	created () {
+		// 方式一：直接获取数据
+		console.log('直接获取: ', window.microApp.getData())
+
+		// 方式二：监听
 		window.microApp && window.microApp.addDataListener(this.handleDataChange, true)
 	},
 	beforeDestory () {
@@ -26,7 +30,6 @@ export default {
 	},
 	methods: {
 		handleDataChange (data) {
-			console.log(data)
 			this.microDataStr = JSON.stringify(data)
 		},
 		sendData () {

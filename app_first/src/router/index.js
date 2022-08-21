@@ -5,8 +5,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path:
-      window.__MICRO_APP_BASE_ROUTE__ || "/" /**根据项目运行的不同环境，设置路径的前缀 */,
+    path: window.__MICRO_APP_BASE_ROUTE__ || "/" /**根据项目运行的不同环境，设置路径的前缀 */,
     name: "Home",
     redirect: { name: "FirstHome" },
     component: () => import("../views/Empty.vue"),
