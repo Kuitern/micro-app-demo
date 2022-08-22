@@ -42,7 +42,6 @@
       <micro-app
         v-if="isChild"
         v-bind="micro"
-        destory
         @created="created"
         @beforemount="beforemount"
         @mounted="mounted"
@@ -57,6 +56,7 @@
 
 <script>
 import { MICRO_APPS, CHILD_PREFIX } from "./micro/config.js";
+import microApp from "@micro-zoe/micro-app";
 
 export default {
   name: "App",
@@ -69,7 +69,7 @@ export default {
         key: "" /**vue 标签的 key 值，用于不同子模块间的切换时，组件重新渲染 */,
         name: "" /**子模块名称，唯一 */,
         data: {} /**子模块数据 */,
-        baseroute: "" /**子模块数据 */,
+        baseroute: "" /**子模块路由 */,
       },
       prefix: CHILD_PREFIX /**子模块链接前缀 */,
     };
@@ -82,11 +82,13 @@ export default {
   },
   created() {
     this.changeChild(this.$route);
+
+    
   },
   methods: {
 		changeData () {
 			this.micro.data = {from: '来自基座的数据' + (new Date())}
-		},
+    },
     created() {
       /**子模块创建 */
       console.log(`${this.micro.name}-created  micro-app元素被創建`);
@@ -99,6 +101,7 @@ export default {
       /**子模块挂载 */
       this.loading = false;
       console.log(`${this.micro.name}-mounted 已经渲染完成`);
+
     },
     unmount() {
       /**子模块卸载 */
@@ -131,9 +134,18 @@ export default {
       }
     },
     handleDataChange(event) {
-      /**获取子路由传递的信息 */
+      console.log('子应用的数据:', event)
+      /**获取子应用的数据 */
       let data = event.detail.data;
       if (data.route) this.$router.push({ name: data.route.name });
+
+      if (data.type == '子应用发送的数据') {
+        this.$notify({
+          title: '基座',
+          message: '收到子应用发送的数据',
+          position: 'top-right'
+        });
+      }
     },
   },
 };
