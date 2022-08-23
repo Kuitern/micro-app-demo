@@ -5,8 +5,9 @@
 			src="../assets/logo.png"
 		>
 		<h1>First Child Home Page</h1>
-		<div class='msg-title'>{{microDataStr}}</div>
-		<button @click="sendData">向基座发送数据</button>
+		<div class='msg-title'>{{microDataStr}}</div><br>
+		<button @click="sendData">向基座发送数据</button>&nbsp;
+		<button @click="sendGlobalData">发送全局数据</button>
 	</div>
 </template>
 
@@ -34,6 +35,9 @@ export default {
 		},
 		sendData () {
 			window.microApp.dispatch({type: '子应用发送的数据'})
+		},
+		sendGlobalData () {
+			window.microApp.setGlobalData({type: '子应用发送的全局数据'})
 		}
 	}
 }
